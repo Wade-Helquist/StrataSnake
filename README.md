@@ -71,7 +71,7 @@ Development took place between **December 20, 2021 and January 19, 2022**, progr
 
 ### Project Evolution
 
-Following completion of the desktop version, the project evolved into **[Fire StrataSnake](https://github.com/Wade-Helquist/Fire
+Following completion of the desktop version, the project evolved into **[Fire StrataSnake](https://github.com/Wade-Helquist/Fire-StrataSnake)**
 
 ---
 
