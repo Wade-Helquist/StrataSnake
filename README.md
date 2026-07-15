@@ -37,29 +37,41 @@ The project provided hands-on experience designing larger object-oriented applic
 
 ## Development Process
 
-Development progressed through several weeks of iterative enhancements, with regular commits focused on expanding gameplay mechanics, refining strategy, and improving the overall player experience.
+Development took place between **December 20, 2021 and January 19, 2022**, progressing through frequent iterative updates focused on expanding gameplay mechanics, balancing strategy, improving the user experience, and refining the overall architecture.
 
-### Late December 2021
+### December 20–21, 2021 — Core Gameplay Foundation
 
-- Implemented custom speed controls and score multiplier mechanics.
+- Implemented adjustable speed controls and score multiplier mechanics.
 - Redesigned the scoring display and user interface.
-- Added a new leveling system.
-- Introduced diagonal movement.
-- Refined difficulty controls and gameplay balancing.
-- Improved collision detection and movement logic.
-- Fixed numerous gameplay bugs and visual issues.
+- Added new control schemes and display panels.
 
-### Early January 2022
+### December 25–31, 2021 — Strategy & Progression
 
-- Expanded strategic gameplay mechanics and scoring based on difficulty.
-- Enhanced graphics, colors, and interface usability.
-- Refactored code using Java Collections and simplified game logic.
-- Implemented a persistent high-score table.
-- Continued gameplay balancing, bug fixes, and interface refinements.
+- Introduced a new leveling system.
+- Added diagonal movement and refined movement mechanics.
+- Expanded strategic gameplay through difficulty adjustments and scoring mechanics.
+- Improved collision detection, game balance, colors, and interface design.
+- Fixed numerous gameplay bugs and logic issues.
+
+### January 2–10, 2022 — Gameplay Refinement
+
+- Expanded scoring based on player-selected difficulty.
+- Continued balancing progression mechanics.
+- Improved graphics, movement behavior, and overall gameplay.
+- Refined collision handling and player statistics.
+- Resolved gameplay and interface bugs.
+
+### January 12–19, 2022 — Polish & Completion
+
+- Refactored game logic using Java Collections.
+- Simplified the codebase and improved maintainability.
+- Implemented persistent high-score storage using file I/O.
+- Enhanced the user interface and player statistics.
+- Continued gameplay balancing, debugging, and final refinements.
 
 ### Project Evolution
 
-Following completion of the desktop version, the project evolved into **[Fire StrataSnake](https://github.com/Wade-Helquist/Fire-StrataSnake)**, where the game's core mechanics were adapted for Android and Amazon Fire TV. The adaptation required redesigning the user interface, input handling, and gameplay systems to support touchscreens and controller-based devices while preserving the strategic gameplay introduced in StrataSnake.
+Following completion of the desktop version, the project evolved into **[Fire StrataSnake](https://github.com/Wade-Helquist/Fire
 
 ---
 
