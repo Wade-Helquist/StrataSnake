@@ -4,7 +4,9 @@
 
 StrataSnake is a strategy-based Snake game built as a desktop Java application using Java Swing.
 
-Rather than recreating the traditional Snake experience, the project introduces progression mechanics, score multipliers, adjustable difficulty, diagonal movement, and strategic gameplay elements that reward planning over simple survival. It served as the foundation for the later Android adaptation, Fire StrataSnake.
+Rather than recreating the traditional Snake experience, the project introduces progression mechanics, score multipliers, adjustable difficulty, diagonal movement, and strategic gameplay elements that reward planning over simple survival.
+
+Originally developed as a desktop application, StrataSnake later served as the foundation for **[Fire StrataSnake](https://github.com/Wade-Helquist/Fire-StrataSnake)**, where its gameplay systems were adapted and redesigned for Android and Amazon Fire TV.
 
 The project provided hands-on experience designing larger object-oriented applications while implementing custom game mechanics, user interface components, and persistent player data.
 
@@ -37,23 +39,27 @@ The project provided hands-on experience designing larger object-oriented applic
 
 Development progressed through several weeks of iterative enhancements, with regular commits focused on expanding gameplay mechanics, refining strategy, and improving the overall player experience.
 
-Commit history reflects work including:
+### Late December 2021
 
-- **Late December 2021**
-  - Implemented custom speed controls and score multiplier mechanics
-  - Redesigned the scoring display and user interface
-  - Added a new leveling system
-  - Introduced diagonal movement
-  - Refined difficulty controls and gameplay balancing
-  - Improved collision detection and movement logic
-  - Fixed numerous gameplay bugs and visual issues
+- Implemented custom speed controls and score multiplier mechanics.
+- Redesigned the scoring display and user interface.
+- Added a new leveling system.
+- Introduced diagonal movement.
+- Refined difficulty controls and gameplay balancing.
+- Improved collision detection and movement logic.
+- Fixed numerous gameplay bugs and visual issues.
 
-- **Early January 2022**
-  - Expanded strategic gameplay mechanics and scoring based on difficulty
-  - Enhanced graphics, colors, and interface usability
-  - Refactored code using Java Lists and simplified game logic
-  - Implemented a persistent high-score table
-  - Continued gameplay balancing, bug fixes, and interface refinements
+### Early January 2022
+
+- Expanded strategic gameplay mechanics and scoring based on difficulty.
+- Enhanced graphics, colors, and interface usability.
+- Refactored code using Java Collections and simplified game logic.
+- Implemented a persistent high-score table.
+- Continued gameplay balancing, bug fixes, and interface refinements.
+
+### Project Evolution
+
+Following completion of the desktop version, the project evolved into **[Fire StrataSnake](https://github.com/Wade-Helquist/Fire-StrataSnake)**, where the game's core mechanics were adapted for Android and Amazon Fire TV. The adaptation required redesigning the user interface, input handling, and gameplay systems to support touchscreens and controller-based devices while preserving the strategic gameplay introduced in StrataSnake.
 
 ---
 
