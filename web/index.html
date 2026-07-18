@@ -52,7 +52,10 @@
         const fullscreen = Boolean(document.fullscreenElement);
         const availableWidth = window.innerWidth - (fullscreen ? 0 : 24);
         const availableHeight = window.innerHeight - (fullscreen ? 0 : 105);
-        const scale = Math.min(1, availableWidth / gameWidth, availableHeight / gameHeight);
+        // Fill the monitor in fullscreen while preserving the game's aspect ratio.
+        // Outside fullscreen, avoid enlarging beyond the native desktop resolution.
+        const fitScale = Math.min(availableWidth / gameWidth, availableHeight / gameHeight);
+        const scale = fullscreen ? fitScale : Math.min(1, fitScale);
         display.style.transform = `scale(${scale})`;
         viewport.style.width = `${gameWidth * scale}px`;
         viewport.style.height = `${gameHeight * scale}px`;
