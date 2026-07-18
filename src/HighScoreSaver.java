@@ -3,15 +3,20 @@ import java.io.File;  // Import the File class
 import java.io.FileWriter;
 import java.io.IOException;  // Import the IOException class to handle errors
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class HighScoreSaver {
     public static void main(String[] args) {
     }
+    public static Path getHighScorePath() {
+        return Paths.get(System.getProperty("user.home", "."), ".stratasnake", "highScoreTable.txt");
+    }
     public static void SaveHighScore(HighScoresList[] highScoresArray){
         try {
-            Files.createDirectories(Paths.get("C:\\ProgramData\\StrataSnake\\"));
-            File myObj = new File("C:\\ProgramData\\StrataSnake\\highScoreTable.txt");
+            Path path = getHighScorePath();
+            Files.createDirectories(path.getParent());
+            File myObj = path.toFile();
             FileWriter myWriter = new FileWriter(myObj);
             for (int i = highScoresArray.length - 1; i >= 0; i--) {
                 myWriter.write(highScoresArray[i].getInitials() + "," +
