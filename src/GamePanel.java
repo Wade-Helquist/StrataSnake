@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.DecimalFormat;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -61,6 +63,16 @@ public class GamePanel extends JPanel implements ActionListener {
         this.setFocusable(true);
         this.setBackground(Color.black);
         this.addKeyListener(new MyKeyAdapter());
+        this.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                requestFocusInWindow();
+                if (r.contains(e.getPoint())) {
+                    text = "";
+                    repaint();
+                }
+            }
+        });
         startGame();
     }
 
@@ -781,4 +793,3 @@ public class GamePanel extends JPanel implements ActionListener {
             }
         }
     }
-
