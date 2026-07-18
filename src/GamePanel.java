@@ -55,6 +55,7 @@ public class GamePanel extends JPanel implements ActionListener {
     ArrayList<SneggyBoard> squares = new ArrayList<>(); // list holding board dimensions and what squares are where
     Rectangle r = new Rectangle(SCREEN_WIDTH + 135, 7, 110, 24);
     String text = "AAA";
+    boolean editingInitials = false;
 
     GamePanel() {
         random = new Random(); //setup random numbers
@@ -69,6 +70,7 @@ public class GamePanel extends JPanel implements ActionListener {
                 requestFocusInWindow();
                 if (r.contains(e.getPoint())) {
                     text = "";
+                    editingInitials = true;
                     repaint();
                 }
             }
@@ -86,6 +88,7 @@ public class GamePanel extends JPanel implements ActionListener {
         highScoresArray = HighScoreReader.ReadHighScore();
         Arrays.sort(highScoresArray, Comparator.comparingInt(HighScoresList::getScore));
         text = highScoresArray[26].getInitials();
+        editingInitials = false;
         skip = 0;
         levelChange = 0;
         attempt += 1;
@@ -666,17 +669,33 @@ public class GamePanel extends JPanel implements ActionListener {
         }
 
         public class MyKeyAdapter extends KeyAdapter {
+            private void saveEditedInitials() {
+                if (gameHighScore <= 0) {
+                    return;
+                }
+                for (HighScoresList highScore : highScoresArray) {
+                    if (highScore.getScore() == gameHighScore) {
+                        highScore.setInitials(text);
+                        HighScoreSaver.SaveHighScore(highScoresArray);
+                        break;
+                    }
+                }
+            }
+
             public void keyPressed(KeyEvent e) {
 
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_BACK_SPACE:
-                        if (text.equals("Initials?")) {
+                        if (!editingInitials || text.equals("Initials?")) {
                             text = "";
                         } else if (text.length() > 0) {
                             StringBuilder sb = new StringBuilder(text);
                             sb.deleteCharAt(sb.length() - 1);
                             text = String.valueOf(sb);
                         }
+                        editingInitials = true;
+                        saveEditedInitials();
+                        repaint();
                         break;
 
                     case KeyEvent.VK_LEFT:
@@ -786,8 +805,17 @@ public class GamePanel extends JPanel implements ActionListener {
                     case KeyEvent.VK_SHIFT:
                         break;
                     default:
-                        if (text.length() < 3) {
-                            text += e.getKeyChar();
+                        char typed = Character.toUpperCase(e.getKeyChar());
+                        if (Character.isLetterOrDigit(typed)) {
+                            if (!editingInitials) {
+                                text = "";
+                                editingInitials = true;
+                            }
+                            if (text.length() < 3) {
+                                text += typed;
+                                saveEditedInitials();
+                                repaint();
+                            }
                         }
                 }
             }
