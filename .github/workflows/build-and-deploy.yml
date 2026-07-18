@@ -1,0 +1,62 @@
+name: Build Java game and deploy Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - name: Build browser JAR
+        run: bash scripts/build-web.sh
+      - name: Verify JAR contents
+        run: |
+          jar tf site/StrataSnake.jar | grep -q '^StrataSnake.class$'
+          jar tf site/StrataSnake.jar | grep -q '^GameFrame.class$'
+          jar tf site/StrataSnake.jar | grep -q '^GamePanel.class$'
+      - name: Upload rebuilt game
+        uses: actions/upload-artifact@v4
+        with:
+          name: stratasnake-site
+          path: site
+          retention-days: 30
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Download rebuilt game
+        uses: actions/download-artifact@v4
+        with:
+          name: stratasnake-site
+          path: site
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
