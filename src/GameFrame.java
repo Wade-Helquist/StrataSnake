@@ -2,7 +2,8 @@ import javax.swing.*;
 
 public class GameFrame extends JFrame {
     GameFrame(){
-        this.add(new  GamePanel());
+        GamePanel gamePanel = new GamePanel();
+        this.add(gamePanel);
         this.setTitle("Sneggy in StrataSnake");
         this.setResizable(false);
         this.setUndecorated(true);
@@ -10,6 +11,7 @@ public class GameFrame extends JFrame {
         this.pack();
         this.setLocation(0, 0);
         this.setVisible(true);
+        gamePanel.requestFocusInWindow();
 
     }
 }
