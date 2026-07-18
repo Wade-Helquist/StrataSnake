@@ -7,6 +7,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class GamePanel extends JPanel implements ActionListener {
 
@@ -99,7 +100,7 @@ public class GamePanel extends JPanel implements ActionListener {
     public int[] getRandomFilteredXY(String filter) {  //get Random XY of specific type
         int[] xy;
         // create new list with only FILTER types
-        java.util.List<SneggyBoard> result = squares.stream().filter(item -> Objects.equals(item.type, filter)).toList();
+        java.util.List<SneggyBoard> result = squares.stream().filter(item -> Objects.equals(item.type, filter)).collect(Collectors.toList());
         int randomLocation = random.nextInt(result.size()); //Find item on shorter list
         xy = new int[2];
         xy[0] = result.get(randomLocation).getX(); // find x value
@@ -118,13 +119,13 @@ public class GamePanel extends JPanel implements ActionListener {
         // "HR" Hollow Red (300, 600, 900 ect) // "SR" Solid Red (negative 1-99)
         // "HY" Hollow Yellow (101-199) // "SY" Solid Yellow (-100, -200, -300 ect)
         //count number of certain type
-        java.util.List<SneggyBoard> result = squares.stream().filter(item -> Objects.equals(item.type, countType)).toList();
+        java.util.List<SneggyBoard> result = squares.stream().filter(item -> Objects.equals(item.type, countType)).collect(Collectors.toList());
         return result.size(); //get number based on size of list
     }
 
     public int getValueAtXY(int x, int y) { //get value on x y
         //filters for x and y - 1 item list - gets value of that item
-        return squares.stream().filter(item -> Arrays.equals(item.getXY(), new int[]{x, y})).toList().get(0).value;
+        return squares.stream().filter(item -> Arrays.equals(item.getXY(), new int[]{x, y})).collect(Collectors.toList()).get(0).value;
     }
 
     public int countNumberAtMax(String type, int changeValue) { //count number of a type
@@ -573,12 +574,12 @@ public class GamePanel extends JPanel implements ActionListener {
             }
 
             switch (direction) {
-                case 'U' -> y[0] = y[0] - 1;
-                case 'D' -> y[0] = y[0] + 1;
-                case 'L' -> x[0] = x[0] - 1;
-                case 'R' -> x[0] = x[0] + 1;
+                case 'U': y[0] = y[0] - 1; break;
+                case 'D': y[0] = y[0] + 1; break;
+                case 'L': x[0] = x[0] - 1; break;
+                case 'R': x[0] = x[0] + 1; break;
 
-                case '7' -> {  // UP Left
+                case '7':  // Up left
                     if (!step) {
                         y[0] = y[0] - 1;
                         step = true;
@@ -586,8 +587,8 @@ public class GamePanel extends JPanel implements ActionListener {
                         x[0] = x[0] - 1;
                         step = false;
                     }
-                }
-                case '1' -> {  // UP Left
+                    break;
+                case '1':  // Down left
                     if (!step) {
                         y[0] = y[0] + 1;
                         step = true;
@@ -595,8 +596,8 @@ public class GamePanel extends JPanel implements ActionListener {
                         x[0] = x[0] - 1;
                         step = false;
                     }
-                }
-                case '9' -> {  // UP Right
+                    break;
+                case '9':  // Up right
                     if (!step) {
                         y[0] = y[0] - 1;
                         step = true;
@@ -604,8 +605,8 @@ public class GamePanel extends JPanel implements ActionListener {
                         x[0] = x[0] + 1;
                         step = false;
                     }
-                }
-                case '3' -> {  // Down Right
+                    break;
+                case '3':  // Down right
                     if (!step) {
                         y[0] = y[0] + 1;
                         step = true;
@@ -613,7 +614,7 @@ public class GamePanel extends JPanel implements ActionListener {
                         x[0] = x[0] + 1;
                         step = false;
                     }
-                }
+                    break;
             }
 
             //Loop around sides
@@ -780,6 +781,4 @@ public class GamePanel extends JPanel implements ActionListener {
             }
         }
     }
-
-
 
