@@ -3,7 +3,6 @@ import java.io.File;  // Import the File class
 import java.io.FileNotFoundException;  // Import this class to handle errors
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Scanner; // Import the Scanner class to read text files
 
 public class HighScoreReader {
@@ -17,14 +16,14 @@ public class HighScoreReader {
             returnArray[i] = tempObject;
         }
         try {
-            Path path = Paths.get("C:\\ProgramData\\StrataSnake\\highScoreTable.txt");
+            Path path = HighScoreSaver.getHighScorePath();
             if (!Files.exists(path)){
                 HighScoreSaver.SaveHighScore(returnArray);
             }
             File myObj = new File(String.valueOf(path));
             Scanner myReader = new Scanner(myObj);
             int index = 0;
-            while (myReader.hasNextLine()) {
+            while (myReader.hasNextLine() && index < returnArray.length) {
                 String data = myReader.nextLine();
                 String[] parts = data.split(",");
                 returnArray[index].setInitials(String.valueOf(parts[0]));
@@ -32,8 +31,9 @@ public class HighScoreReader {
                 returnArray[index].setLevel(Float.parseFloat(parts[2]));
                 index++;
             }
+            myReader.close();
             return returnArray;
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return returnArray;
         }
