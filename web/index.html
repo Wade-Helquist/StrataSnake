@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#020617" />
+  <title>StrataSnake — Java Browser Game</title>
+  <script src="https://cjrtnc.leaningtech.com/4.3/loader.js"></script>
+  <style>
+    :root { color-scheme: dark; font-family: Inter, system-ui, sans-serif; background: #020617; color: #f8fafc; }
+    * { box-sizing: border-box; }
+    body { min-height: 100vh; margin: 0; overflow-x: hidden; background: #020617; }
+    main { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 12px; }
+    .topbar { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    h1 { margin: 0; font-size: clamp(1.4rem, 3vw, 2.4rem); letter-spacing: -0.04em; }
+    .controls { display: flex; gap: 8px; }
+    button { padding: 8px 14px; border: 1px solid #22c55e; border-radius: 8px; background: #052e16; color: #f8fafc; font: inherit; font-weight: 700; cursor: pointer; }
+    button:hover, button:focus-visible { background: #14532d; outline: 2px solid #86efac; outline-offset: 2px; }
+    #game-viewport { overflow: hidden; background: #000; box-shadow: 0 18px 60px rgba(0, 0, 0, 0.65); }
+    #display { width: 1520px; height: 725px; transform-origin: top left; background: #000; }
+    #status { min-height: 20px; margin: 0; color: #bbf7d0; font-size: 0.9rem; }
+    .help { margin: 0; color: #94a3b8; font-size: 0.85rem; text-align: center; }
+    :fullscreen main { padding: 0; gap: 0; }
+    :fullscreen .topbar, :fullscreen #status, :fullscreen .help { display: none; }
+  </style>
+</head>
+<body>
+  <main id="game-page">
+    <header class="topbar">
+      <h1>StrataSnake</h1>
+      <div class="controls">
+        <button id="fullscreen-game" type="button">Fullscreen</button>
+        <button id="reset-game" type="button">Reset Game</button>
+      </div>
+    </header>
+    <div id="game-viewport" aria-label="StrataSnake game"><div id="display" tabindex="0"></div></div>
+    <p id="status" role="status">Loading the Java runtime…</p>
+    <p class="help">Use the arrow keys or number pad. Press Space to restart after game over.</p>
+  </main>
+  <script>
+    (async function startGame() {
+      const page = document.getElementById("game-page");
+      const status = document.getElementById("status");
+      const display = document.getElementById("display");
+      const viewport = document.getElementById("game-viewport");
+      const resetButton = document.getElementById("reset-game");
+      const fullscreenButton = document.getElementById("fullscreen-game");
+      const gameWidth = 1520;
+      const gameHeight = 725;
+
+      function resizeGame() {
+        const fullscreen = Boolean(document.fullscreenElement);
+        const availableWidth = window.innerWidth - (fullscreen ? 0 : 24);
+        const availableHeight = window.innerHeight - (fullscreen ? 0 : 105);
+        const scale = Math.min(1, availableWidth / gameWidth, availableHeight / gameHeight);
+        display.style.transform = `scale(${scale})`;
+        viewport.style.width = `${gameWidth * scale}px`;
+        viewport.style.height = `${gameHeight * scale}px`;
+      }
+
+      resetButton.addEventListener("click", () => {
+        resetButton.disabled = true;
+        status.textContent = "Resetting the game…";
+        window.location.reload();
+      });
+      fullscreenButton.addEventListener("click", async () => {
+        if (document.fullscreenElement) await document.exitFullscreen();
+        else await page.requestFullscreen();
+      });
+      document.addEventListener("fullscreenchange", () => {
+        fullscreenButton.textContent = document.fullscreenElement ? "Exit Fullscreen" : "Fullscreen";
+        resizeGame();
+        display.focus();
+      });
+      window.addEventListener("resize", resizeGame);
+      display.addEventListener("click", () => display.focus());
+      resizeGame();
+
+      try {
+        await cheerpjInit({ version: 8, status: "splash" });
+        cheerpjCreateDisplay(gameWidth, gameHeight, display);
+        const pageDirectory = new URL(".", window.location.href).pathname;
+        const jarPath = `/app${pageDirectory}StrataSnake.jar`.replace(/\/{2,}/g, "/");
+        status.textContent = "Java is starting — the first load can take a minute or two…";
+        cheerpjRunJar(jarPath).catch((error) => {
+          console.error(error);
+          status.textContent = "The game stopped unexpectedly. Use Reset Game to try again.";
+        });
+      } catch (error) {
+        console.error(error);
+        status.textContent = "Could not load the Java runtime. Use Reset Game to try again.";
+      }
+    })();
+  </script>
+</body>
+</html>
